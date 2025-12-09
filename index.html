@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nah I'd Win - Portfolio</title>
-    
-    <link rel="stylesheet" href="assets/main.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nah I'd Win</title>
+    <!-- Use main.css at repo root (matches the file in your repo) -->
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
 
     <audio id="background-music" loop> 
-        <source src="assets/music/Cyberpunk.mp3" type="audio/mpeg">
+        <!-- music expected at music/Cyberpunk.mp3 in repo root -->
+        <source src="music/Cyberpunk.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -32,7 +33,8 @@
         <section id="home" class="content-section">
             
             <section class="logo-section">
-                <img src="assets/images/nahwewin.jpg" alt="Nah I'd Win Logo" width="150" height="150">
+                <!-- images moved from assets/images/... to images/... -->
+                <img src="images/nahwewin.jpg" alt="Nah I'd Win Logo" width="150" height="150">
             </section>
 
             <section class="opening-section">
@@ -42,7 +44,7 @@
                     <a href="#portfolio">View Portfolio</a>
                 </div>
                 <div class="opening-image">
-                    <img src="assets/images/gojo.jpg" alt="Gojo Image">
+                    <img src="images/gojo.jpg" alt="Gojo Image">
                 </div>
             </section>
         
@@ -55,25 +57,25 @@
             <div class="portfolio-grid">
 
                 <div class="portfolio-item">
-                    <img src="assets/images/hewillwin.webp" alt="He Will Win">
+                    <img src="images/hewillwin.webp" alt="He Will Win">
                     <h4>He Will Win</h4>
                     <p>A surreal manga-style piece featuring “Nah, I’d Win.”</p>
                 </div>
 
                 <div class="portfolio-item">
-                    <img src="assets/images/gojodie.webp" alt="Gojo Die">
+                    <img src="images/gojodie.webp" alt="Gojo Die">
                     <h4>Death</h4>
                     <p>Don't worry, I will come back.</p>
                 </div>
 
                 <div class="portfolio-item">
-                    <img src="assets/images/gojokitkat.jpg" alt="Gojo Kitkat">
+                    <img src="images/gojokitkat.jpg" alt="Gojo Kitkat">
                     <h4>Gojo Kitkat</h4>
                     <p>Please buy our product — Gojo Kitkats.</p>
                 </div>
 
                 <div class="portfolio-item">
-                    <img src="assets/images/purpol.jpg" alt="Full Power">
+                    <img src="images/purpol.jpg" alt="Full Power">
                     <h4>Full Power</h4>
                     <p>Hollow Purple.</p>
                 </div>
@@ -100,74 +102,14 @@
             </div>
         </div>
     </footer>
-    
-   <script>
-    document.addEventListener('DOMContentLoaded', () => { 
 
+    <script>
+      // small script to toggle audio
+      document.getElementById('audio-toggle').addEventListener('click', function () {
         const audio = document.getElementById('background-music');
-        const toggleButton = document.getElementById('audio-toggle');
-        
-        // Check if the elements exist
-        if (!audio || !toggleButton) {
-            console.error("Audio or Button element not found!");
-            return;
-        }
-
-        let isPlaying = false; 
-
-        // Helper: Update Button Text
-        function updateButtonState(playing) {
-            if (playing) {
-                toggleButton.innerHTML = "🔇 Stop Music";
-                toggleButton.classList.add('active-music');
-            } else {
-                toggleButton.innerHTML = "🔊 Play Theme";
-                toggleButton.classList.remove('active-music');
-            }
-        }
-
-        // 1. SIMPLE CLICK HANDLER (The "Nuclear Option" fix)
-        toggleButton.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                updateButtonState(false);
-            } else {
-                // Force volume to 50% just in case
-                audio.volume = 0.5;
-                
-                // Try to play
-                const playPromise = audio.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        // Audio started!
-                        isPlaying = true;
-                        updateButtonState(true);
-                    })
-                    .catch(error => {
-                        // If this runs, something is still wrong with the music file path or name
-                        console.error("Playback failed:", error);
-                        alert("Music failed to play. Check the path for Cyberpunk.mp3!");
-                    });
-                }
-            }
-        });
-
-        // 2. Smooth Scroll Logic
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if(targetElement){
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    });
-</script>
-  
+        if (audio.paused) { audio.play(); this.textContent = '🔊 Pause Theme'; }
+        else { audio.pause(); this.textContent = '🔊 Play Theme'; }
+      });
+    </script>
 </body>
-
 </html>
