@@ -1,0 +1,352 @@
+/* ------------------------------------ */
+/* --- 1. Custom Font Loading (@font-face) --- */
+/* ------------------------------------ */
+@font-face {
+    font-family: 'CCroman';
+    /* IMPORTANT: Make sure CCroman.ttf is placed in the assets/fonts/ directory */
+    src: url('fonts/CCroman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ------------------------------------ */
+/* --- 2. Global Styles & Neon Setup --- */
+/* ------------------------------------ */
+:root {
+    --color-background: #121212; /* Dark background fallback */
+    --color-text: #E0E0E0; /* Light text for contrast */
+    --color-neon-red: #FF3366;
+    --color-neon-blue: #33CCFF;
+    --color-neon-purple: #C850C0;
+    --color-divider: rgba(255, 255, 255, 0.1);
+    --header-height: 80px; /* Defines header height for scroll padding */
+    --font-primary: 'Arial', sans-serif;
+    --font-headers: 'CCroman', serif; /* Custom CCroman font */
+    --neon-cycle-duration: 4s; /* Speed of the color shift animation */
+}
+
+/* Keyframe animation for border/shadow color shift (Red, Purple, Blue) */
+@keyframes neon-cycle {
+    /* BRIGHTER BOX-SHADOWS */
+    0%   { border-color: var(--color-neon-red); box-shadow: 0 0 100px var(--color-neon-red), 0 0 20px var(--color-neon-red); }
+    33%  { border-color: var(--color-neon-purple); box-shadow: 0 0 100px var(--color-neon-purple), 0 0 20px var(--color-neon-purple); }
+    66%  { border-color: var(--color-neon-blue); box-shadow: 0 0 100px var(--color-neon-blue), 0 0 20px var(--color-neon-blue); }
+    100% { border-color: var(--color-neon-red); box-shadow: 0 0 100px var(--color-neon-red), 0 0 20px var(--color-neon-red); }
+}
+
+/* Keyframe animation for text shadow glow */
+@keyframes text-cycle {
+    /* BIGGER GLOW on text */
+    0%   { text-shadow: 0 0 8px var(--color-neon-red), 0 0 15px var(--color-neon-red); }
+    33%  { text-shadow: 0 0 8px var(--color-neon-purple), 0 0 15px var(--color-neon-purple); }
+    66%  { text-shadow: 0 0 8px var(--color-neon-blue), 0 0 15px var(--color-neon-blue); }
+    100% { text-shadow: 0 0 8px var(--color-neon-red), 0 0 15px var(--color-neon-red); }
+}
+
+/* --- Smooth Scroll Fix & Base Styles --- */
+html {
+    /* FIX: Enables smooth scrolling behavior */
+    scroll-behavior: smooth;
+    /* FIX: Adds padding to prevent sticky header from hiding content when jumping to an ID */
+    scroll-padding-top: var(--header-height); 
+}
+
+body {
+    background-color: var(--color-background); /* Fallback color */
+    
+    /* *** NEW CHANGE: ADDED BACKGROUND IMAGE *** */
+    /* Path is relative to the CSS file location */
+    background-image: url('images/voidd.jpg'); 
+    background-size: cover; /* Ensures image covers the whole screen without stretching weirdly */
+    background-position: center; /* Centers the image */
+    background-attachment: fixed; /* The background stays still while you scroll content over it */
+    /* *** END NEW CHANGE *** */
+
+    color: var(--color-text);
+    font-family: var(--font-primary);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- Typography & Headings (Using CCroman) --- */
+h1, h2, h3, h4 {
+    color: var(--color-text);
+    font-family: var(--font-headers); /* CCroman applied */
+    font-weight: 700; 
+    animation: text-cycle var(--neon-cycle-duration) infinite alternate;
+    margin-top: 0;
+}
+
+h1 { font-size: 2.5em; text-transform: uppercase; }
+h2 { font-size: 2em; }
+
+a {
+    color: var(--color-neon-blue);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--color-text);
+    text-shadow: 0 0 15px var(--color-neon-blue); 
+}
+
+/* ------------------------------------ */
+/* --- 3. Header & Navigation --- */
+/* ------------------------------------ */
+header {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black looks good over bg image */
+    padding: 15px 0;
+    height: calc(var(--header-height) - 30px); 
+    border-bottom: 2px solid var(--color-neon-red); 
+    box-shadow: 0 0 15px var(--color-neon-red); 
+    animation: neon-cycle var(--neon-cycle-duration) infinite alternate;
+    position: sticky; 
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--color-neon-purple);
+}
+
+/* Neon Button Style */
+.nav-button {
+    background: transparent;
+    border: 2px solid var(--color-neon-purple);
+    color: var(--color-neon-purple);
+    padding: 8px 15px;
+    margin-left: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--color-neon-purple); 
+    transition: all 0.3s;
+}
+
+.nav-button:hover, .nav-button.active-music {
+    color: var(--color-background);
+    animation: neon-cycle var(--neon-cycle-duration) infinite alternate;
+    background-color: var(--color-neon-red); 
+}
+
+.nav-button.active-music {
+    box-shadow: 0 0 15px var(--color-neon-blue), 0 0 30px var(--color-neon-purple);
+}
+
+/* ------------------------------------ */
+/* --- 4. Main Content Sections --- */
+/* ------------------------------------ */
+.content-section {
+    padding: 60px 0;
+}
+
+.neon-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--color-divider);
+    animation: neon-cycle var(--neon-cycle-duration) infinite alternate;
+    margin: 40px auto;
+    width: 80%;
+}
+
+/* Home Section */
+.logo-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-section img {
+    border-radius: 50%;
+    border: 3px solid var(--color-neon-blue);
+    box-shadow: 0 0 20px var(--color-neon-blue), 0 0 35px var(--color-neon-blue);
+    object-fit: cover;
+    transition: box-shadow 0.5s;
+}
+
+.opening-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+    background: rgba(25, 25, 25, 0.8); /* Keeps content readable against bg image */
+    border-radius: 10px;
+    border: 1px solid var(--color-neon-purple);
+    box-shadow: 0 0 30px rgba(200, 80, 192, 0.7); 
+    transition: box-shadow 0.5s;
+}
+
+.opening-content {
+    flex: 1;
+}
+
+.opening-image {
+    flex: 0 0 40%;
+    text-align: center;
+}
+
+.opening-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 2px solid var(--color-neon-blue);
+    box-shadow: 0 0 15px var(--color-neon-blue);
+    transition: all 0.5s;
+}
+
+.opening-content a {
+    display: inline-block;
+    background-color: var(--color-neon-red);
+    color: var(--color-background);
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px var(--color-neon-red);
+    transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
+}
+
+.opening-content a:hover {
+    color: var(--color-background);
+    transform: translateY(-2px);
+    background-color: var(--color-neon-purple);
+    box-shadow: 0 0 20px var(--color-neon-purple);
+}
+
+
+/* Portfolio Section */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.portfolio-item {
+    background: rgba(25, 25, 25, 0.6); /* Keeps content readable */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--color-divider);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px var(--color-neon-red); 
+    animation: neon-cycle var(--neon-cycle-duration) infinite alternate;
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 150px; /* Smaller images as requested previously */
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid var(--color-neon-blue);
+    margin-bottom: 15px;
+}
+
+.portfolio-item h4 {
+    font-size: 1.2em;
+    color: var(--color-text);
+    font-family: var(--font-headers);
+    animation: text-cycle var(--neon-cycle-duration) infinite alternate;
+}
+
+.portfolio-item p {
+    font-size: 0.9em;
+    color: #AAAAAA;
+}
+
+/* Contact Section */
+.contact-section {
+    text-align: center;
+    padding: 40px 0 60px 0;
+}
+
+.contact-section strong {
+    color: var(--color-neon-purple);
+    text-shadow: 0 0 5px var(--color-neon-purple);
+    font-size: 1.1em;
+}
+
+/* ------------------------------------ */
+/* --- 5. Footer --- */
+/* ------------------------------------ */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px 0;
+    border-top: 2px solid var(--color-neon-blue);
+    box-shadow: 0 0 20px var(--color-neon-blue);
+    animation: neon-cycle var(--neon-cycle-duration) infinite alternate;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.85em;
+    color: #777;
+}
+
+footer div a {
+    margin-left: 15px;
+    font-size: 0.9em;
+    color: var(--color-neon-red);
+}
+
+/* ------------------------------------ */
+/* --- 6. Responsiveness --- */
+/* ------------------------------------ */
+@media (max-width: 768px) {
+    .opening-section {
+        flex-direction: column;
+    }
+
+    .opening-image {
+        margin-top: 20px;
+    }
+
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-links {
+        margin-top: 15px;
+    }
+
+    .nav-links a, .nav-button {
+        display: block;
+        margin: 10px auto;
+    }
+
+    footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    footer div {
+        margin-top: 10px;
+    }
+}

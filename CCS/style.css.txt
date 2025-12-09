@@ -1,0 +1,16 @@
+/* Import custom font */
+@font-face {
+    font-family: 'CCroman';
+    src: url('fonts/CCroman.ttf') format('truetype');
+}
+
+/* Background image */
+body {
+    background-image: url('images/bruhnig.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    font-family: 'CCroman', Arial, sans-serif;
+}
